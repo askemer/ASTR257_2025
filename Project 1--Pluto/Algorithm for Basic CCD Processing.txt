@@ -1,0 +1,14 @@
+Algorithm for handling 3 each of science, dome-flat, dark, and bias (assuming different integration times):
+
+Master_Bias = median(Bias1, Bias2, Bias3)
+
+Master_Dark = median(Dark1, Dark2, Dark3) - Master_Bias
+Master_Dark_persec = Master_Dark / Dark_int_time
+
+Master_Flat = median(Flat1, Flat2, Flat3) - Master_Bias
+Master_Flat_persec = Master_Flat / Flat_int_time - Master_Dark_persec
+Normalized_Flat = Master_Flat_persec / median(Master_Flat_persec)
+
+Master_Science = median(Science1, Science2, Science3) - Master_Bias
+Master_Science_persec = Master_Science / Science_int_time - Master_Dark_persec
+Final_Science = Master_Science_persec / Normalized_Flat
